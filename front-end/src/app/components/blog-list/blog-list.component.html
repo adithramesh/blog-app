@@ -1,0 +1,18 @@
+<app-navbar></app-navbar>
+<app-sidebar></app-sidebar>
+
+<div class="blog-list-container">
+  <div class="blog-list-header">
+    <h2>{{ filterType === 'my' ? 'My Blogs' : 'All Blogs' }}</h2>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">Loading blogs...</div>
+
+  <div *ngIf="!isLoading && blogs.length === 0" class="no-blogs">
+    <p>{{ filterType === 'my' ? 'You haven\'t created any blogs yet.' : 'No blogs available.' }}</p>
+  </div>
+
+  <div class="blog-grid" *ngIf="!isLoading && blogs.length > 0">
+    <app-blog-card *ngFor="let blog of blogs" [blog]="blog"></app-blog-card>
+  </div>
+</div>

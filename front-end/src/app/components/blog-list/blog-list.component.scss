@@ -1,0 +1,37 @@
+.blog-list-container {
+  margin-left: 220px;
+  margin-top: 60px;
+  padding: 2rem;
+  min-height: calc(100vh - 60px);
+  background: linear-gradient(to right, #fffce8, #e7f8e2);
+
+  .blog-list-header {
+    margin-bottom: 2rem;
+
+    h2 {
+      color: #3c3c3c;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+  }
+
+  .loading {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+    font-size: 1.2rem;
+  }
+
+  .no-blogs {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+    font-size: 1.1rem;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+}

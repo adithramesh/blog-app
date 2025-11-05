@@ -1,0 +1,11 @@
+<div class="blog-card" (click)="viewDetails()">
+  <div class="blog-image">
+    <img [src]="getImageUrl()" [alt]="blog.title" />
+  </div>
+  <div class="blog-content">
+    <h3 class="blog-title">{{ blog.title }}</h3>
+    <p class="blog-author">By {{ blog.author.username }}</p>
+    <p class="blog-text">{{ getShortContent() }}</p>
+    <button class="read-more-btn">Read More →</button>
+  </div>
+</div>
