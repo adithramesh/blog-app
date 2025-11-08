@@ -19,9 +19,9 @@ export class BlogService {
     return this.http.get<BlogResponseDTO>(`${this.apiUrl}/${id}`);
   }
 
-   getBlogsByUserId(userId: string): Observable<BlogListResponseDTO> {
+  getBlogsByUserId(userId: string): Observable<BlogListResponseDTO> {
     return this.http.get<BlogListResponseDTO>(`${this.apiUrl}/user/${userId}`);
-   }
+  }
 
   createBlog(formData: FormData): Observable<BlogResponseDTO> {
     return this.http.post<BlogResponseDTO>(`${this.apiUrl}/create`, formData);

@@ -37,7 +37,6 @@ export class BlogService implements IBlogService {
         
         const blogs = await this._blogRepository.findBlogs()
         const totalBlogs = await this._blogRepository.countBlogs()
-
         const blogList:BlogResponseDTO[]=blogs.map(mapBlogToDto)
         return {
           blogs: blogList,
