@@ -65,8 +65,17 @@ export class BlogDetailComponent implements OnInit {
 
   deleteBlog(){
     if (this.blog?.id) {
-      this._blogService.deleteBlog(this.blog.id)
-      this._router.navigate(['/blogs']);
+
+      this._blogService.deleteBlog(this.blog.id).subscribe({     
+        next:(res)=>{
+          this._router.navigate(['/blogs']);
+        },
+        error:(err)=>{
+          console.error('Delete failed:', err);
+          this._router.navigate(['/blogs']);
+        }
+      })
+      
     }
   }
 

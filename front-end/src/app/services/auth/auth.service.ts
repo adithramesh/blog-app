@@ -34,7 +34,9 @@ export class AuthService {
         const decoded: DecodedToken = jwtDecode(token);
         return {
           id: decoded.id,
-          username: decoded.username || 'User'
+          username: decoded.username && typeof decoded.username === 'string' 
+                      ? decoded.username 
+                      : 'User'
         };
       } catch {
         return null;
