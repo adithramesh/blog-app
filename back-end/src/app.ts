@@ -21,7 +21,7 @@ export class App {
         this.app.use(morgan("dev"));
        
        const corsOptions = {
-        origin:['http://localhost:4200'],
+        origin:['http://localhost:4200', 'https://blog-app-pearl-nine-42.vercel.app'],
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true, 
         allowedHeaders: ['Content-Type', 'Authorization'],
