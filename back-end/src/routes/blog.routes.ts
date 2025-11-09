@@ -22,6 +22,7 @@ export class BlogRoutes{
         this._router.get('/:id',this._blogController.getBlogById.bind(this._blogController))
         this._router.get('/user/:userId', this._blogController.getBlogsByUserId.bind(this._blogController));
         this._router.patch('/:id/update',upload.single('image'),this._blogController.updateBlog.bind(this._blogController))
+        this._router.delete('/:id/delete', this._blogController.deleteBlog.bind(this._blogController))
     }
 
     public getRouter(){

@@ -32,4 +32,8 @@ export class BlogRepository extends BaseRepository<IBlog> implements IBlogReposi
     async countBlogs(): Promise<number> {
         return await this.count() 
     }
+
+    // async deleteBlog(id: string): Promise<boolean> {
+        
+    // }
 }

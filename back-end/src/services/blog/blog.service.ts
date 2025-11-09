@@ -99,7 +99,21 @@ export class BlogService implements IBlogService {
          return mapBlogToDto(updatedBlog);
 
       } catch (error) {
-        console.error("Error in updateSubblog blog:", error);
+        console.error("Error in update blog blog:", error);
+        throw error;
+      }
+    }
+
+     async deleteBlog(blogId:string):Promise<{success:boolean; message: string}>{
+      try {
+        const response =await this._blogRepository.delete(blogId)
+        if(response){
+          return {success:true,message:"Deleted blog successfully"}
+        }else{
+          return {success:false,message:"Delete blog unsuccessful "}
+        }
+      } catch (error) {
+        console.error("Error in deleting blog:", error);
         throw error;
       }
     }
@@ -121,4 +135,6 @@ function mapBlogToDto(blog: IBlog): BlogResponseDTO {
         createdAt: blog.createdAt ? blog.createdAt.toISOString() : '',
         updatedAt: blog.updatedAt ? blog.updatedAt.toISOString() : '',
     };
+
+   
 }

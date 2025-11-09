@@ -83,7 +83,18 @@ export class BlogController implements IBlogController {
       res.status(HttpStatus.SUCCESS).json(response);
     } catch (error) {
       console.log("error occured in update blog", error);
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async deleteBlog(req: Request, res: Response): Promise<void> {
+    try {
+      const blogId = req.params.id
+      const response = await this._blogService.deleteBlog(blogId)
+      res.status(HttpStatus.SUCCESS).json(response)
+    } catch (error) {
+      console.log("error occured in update blog", error);
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 

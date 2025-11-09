@@ -11,4 +11,5 @@ export interface IBlogController {
     getBlogsByUserId(req: Request, res: Response<BlogListResponseDTO>): Promise<void>
     getBlogById(req:Request, res:Response<BlogResponseDTO>):Promise<void>
     updateBlog(req:Request<EmptyParams, object, BlogRequestDTO>, res:Response<BlogResponseDTO>):Promise<void>
+    deleteBlog(req: Request, res: Response): Promise<void>
 }   

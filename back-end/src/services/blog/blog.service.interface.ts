@@ -6,4 +6,5 @@ export interface IBlogService{
     getBlogs(): Promise<BlogListResponseDTO>
     getBlogsByUserId(userId: string): Promise<BlogListResponseDTO>;
     updateBlog(blogId:string, blogData:BlogRequestDTO):Promise<BlogResponseDTO>
+    deleteBlog(blogId:string):Promise<{success:boolean; message: string}>
 }
