@@ -89,7 +89,7 @@ export class BlogController implements IBlogController {
 
   async deleteBlog(req: Request, res: Response): Promise<void> {
     try {
-      const blogId = req.params.id
+      const blogId = req.params.id   
       const response = await this._blogService.deleteBlog(blogId)
       res.status(HttpStatus.SUCCESS).json(response)
     } catch (error) {

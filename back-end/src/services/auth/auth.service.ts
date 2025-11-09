@@ -61,7 +61,8 @@ export class AuthService implements IAuthService{
             return { success: false, message: "Invalid password", status: HttpStatus.UNAUTHORIZED };
         }
         const userId = (user._id as mongoose.Types.ObjectId).toString();
-        const accessToken = jwt.sign({ id: userId}, config.JWT_SECRET, { expiresIn: "1h" });
+        const username =user.username
+        const accessToken = jwt.sign({ id: userId, username}, config.JWT_SECRET, { expiresIn: "1h" });
         console.log("access_token",accessToken);
         
         return {
