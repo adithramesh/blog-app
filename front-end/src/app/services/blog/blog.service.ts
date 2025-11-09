@@ -30,4 +30,8 @@ export class BlogService {
   updateBlog(id: string, formData: FormData): Observable<BlogResponseDTO> {
     return this.http.patch<BlogResponseDTO>(`${this.apiUrl}/${id}/update`, formData);
   }
+
+  deleteBlog(id: string):Observable<{success:boolean, message:string}>{
+    return this.http.delete<{success:boolean, message:string}>(`${this.apiUrl}/${id}/delete`)
+  }
 }

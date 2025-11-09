@@ -62,6 +62,14 @@ export class BlogDetailComponent implements OnInit {
     }
   }
 
+
+  deleteBlog(){
+    if (this.blog?.id) {
+      this._blogService.deleteBlog(this.blog.id)
+      this._router.navigate(['/blogs']);
+    }
+  }
+
   getImageUrl(): string {
     return this.blog?.imageUrl 
       ? `https://res.cloudinary.com/${environment.CLOUDINARY_CLOUD_NAME}/image/upload/${this.blog.imageUrl}`
