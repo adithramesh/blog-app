@@ -8,6 +8,7 @@ import { BlogService } from '../../services/blog/blog.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { BlogResponseDTO } from '../../models/blog.model';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-blog-list',
@@ -25,12 +26,15 @@ export class BlogListComponent implements OnInit {
   private _authService = inject(AuthService);
   private _route = inject(ActivatedRoute);
   private _toastr = inject(ToastrService);
+  private _subscription = new Subscription()
 
   ngOnInit() {
-    this._route.queryParams.subscribe(params => {
+    const sub = this._route.queryParams.subscribe(params => {
       this.filterType = params['filter'] === 'my' ? 'my' : 'all';
       this.loadBlogs();
     });
+
+    this._subscription.add(sub)
   }
 
   loadBlogs() {
@@ -39,7 +43,7 @@ export class BlogListComponent implements OnInit {
     if (this.filterType === 'my') {
       const user = this._authService.getCurrentUser();
       if (user) {
-        this._blogService.getBlogsByUserId(user.id).subscribe({
+        const sub = this._blogService.getBlogsByUserId(user.id).subscribe({
           next: (res) => {
             this.blogs = res.blogs;
             this.isLoading = false;
@@ -49,9 +53,10 @@ export class BlogListComponent implements OnInit {
             this.isLoading = false;
           }
         });
+        this._subscription.add(sub)
       }
     } else {
-      this._blogService.getAllBlogs().subscribe({
+      const sub = this._blogService.getAllBlogs().subscribe({
         next: (res) => {
           this.blogs = res.blogs;
           this.isLoading = false;
@@ -61,6 +66,12 @@ export class BlogListComponent implements OnInit {
           this.isLoading = false;
         }
       });
+      this._subscription.add(sub)
     }
+  }
+
+
+  ngOnDestroy(){
+    this._subscription.unsubscribe()
   }
 }

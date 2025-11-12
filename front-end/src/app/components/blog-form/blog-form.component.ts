@@ -8,6 +8,7 @@ import { BlogService } from '../../services/blog/blog.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-blog-form',
@@ -34,6 +35,7 @@ export class BlogFormComponent implements OnInit {
   private _router = inject(Router);
   private _route = inject(ActivatedRoute);
   private _toastr = inject(ToastrService);
+  private _subscription = new Subscription();
 
   ngOnInit() {
     this.blogId = this._route.snapshot.paramMap.get('id');
@@ -47,7 +49,7 @@ export class BlogFormComponent implements OnInit {
   loadBlogForEdit() {
     if (!this.blogId) return;
     
-    this._blogService.getBlogById(this.blogId).subscribe({
+    const sub = this._blogService.getBlogById(this.blogId).subscribe({
       next: (blog) => {
         this.form.title = blog.title;
         this.form.content = blog.content;
@@ -57,6 +59,7 @@ export class BlogFormComponent implements OnInit {
       },
       error: () => this._toastr.error('Failed to load blog')
     });
+    this._subscription.add(sub)
   }
 
   onImageSelect(event: Event) {
@@ -95,7 +98,7 @@ export class BlogFormComponent implements OnInit {
     }
 
     if (this.mode === 'create') {
-      this._blogService.createBlog(formData).subscribe({
+      const sub = this._blogService.createBlog(formData).subscribe({
         next: () => {
           this._toastr.success('Blog created successfully!');
           this._router.navigate(['/blogs']);
@@ -105,8 +108,9 @@ export class BlogFormComponent implements OnInit {
           this.isSubmitting = false;
         }
       });
+      this._subscription.add(sub)
     } else if (this.blogId) {
-      this._blogService.updateBlog(this.blogId, formData).subscribe({
+      const sub = this._blogService.updateBlog(this.blogId, formData).subscribe({
         next: () => {
           this._toastr.success('Blog updated successfully!');
           this._router.navigate(['/blogs', this.blogId]);
@@ -116,10 +120,16 @@ export class BlogFormComponent implements OnInit {
           this.isSubmitting = false;
         }
       });
+      this._subscription.add(sub)
     }
   }
 
   cancel() {
     this._router.navigate(['/blogs']);
+  }
+
+
+  ngOnDestroy(){
+    this._subscription.unsubscribe()
   }
 }

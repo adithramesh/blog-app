@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { BlogResponseDTO } from '../../models/blog.model';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-blog-detail',
@@ -26,6 +27,7 @@ export class BlogDetailComponent implements OnInit {
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
   private _toastr = inject(ToastrService);
+  private _subscription = new Subscription();
 
   ngOnInit() {
     const blogId = this._route.snapshot.paramMap.get('id');
@@ -35,7 +37,7 @@ export class BlogDetailComponent implements OnInit {
   }
 
   loadBlog(id: string) {
-    this._blogService.getBlogById(id).subscribe({
+    const sub = this._blogService.getBlogById(id).subscribe({
       next: (blog) => {
         this.blog = blog;
         this.checkOwnership();
@@ -47,6 +49,7 @@ export class BlogDetailComponent implements OnInit {
         this.isLoading = false;
       }
     });
+    this._subscription.add(sub)
   }
 
   checkOwnership() {
@@ -87,5 +90,10 @@ export class BlogDetailComponent implements OnInit {
 
   goBack() {
     this._router.navigate(['/blogs']);
+  }
+
+
+  ngOnDestroy(){
+      this._subscription.unsubscribe()
   }
 }
